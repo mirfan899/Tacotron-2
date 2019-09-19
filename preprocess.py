@@ -38,12 +38,12 @@ def norm_data(args):
 	merge_books = (args.merge_books=='True')
 
 	print('Selecting data folders..')
-	supported_datasets = ['LJSpeech-1.0', 'LJSpeech-1.1', 'M-AILABS']
+	supported_datasets = ['LJSpeech-1.0', 'LJSpeech-1.1', 'M-AILABS', 'cantonese']
 	if args.dataset not in supported_datasets:
 		raise ValueError('dataset value entered {} does not belong to supported datasets: {}'.format(
 			args.dataset, supported_datasets))
 
-	if args.dataset.startswith('liepa'):
+	if args.dataset.startswith('cantonese'):
 		if not args.voice:
 			raise ValueError('`--voice` parameter not defiend for  datasets {}'.format(args.dataset))
 		return [os.path.join(args.base_dir, voice) for voice in args.voice.split(',')]
