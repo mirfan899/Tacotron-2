@@ -44,9 +44,7 @@ def norm_data(args):
 			args.dataset, supported_datasets))
 
 	if args.dataset.startswith('cantonese'):
-		if not args.voice:
-			raise ValueError('`--voice` parameter not defiend for  datasets {}'.format(args.dataset))
-		return [os.path.join(args.base_dir, voice) for voice in args.voice.split(',')]
+		return [os.path.join(args.base_dir, args.dataset)]
 
 	if args.dataset.startswith('LJSpeech'):
 		return [os.path.join(args.base_dir, args.dataset)]
