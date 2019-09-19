@@ -97,7 +97,7 @@ def main():
 		help='Hyperparameter overrides as a comma-separated list of name=value pairs')
 	parser.add_argument('--dataset', default='cantonese')
 	parser.add_argument('--language', default='en_US')
-	parser.add_argument('--voice', default='male')
+	parser.add_argument('--voice', default='female')
 	parser.add_argument('--reader', default='mary_ann')
 	parser.add_argument('--merge_books', default='False')
 	parser.add_argument('--book', default='northandsouth')
