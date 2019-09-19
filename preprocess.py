@@ -17,6 +17,7 @@ def preprocess(args, input_folders, out_dir, hparams):
 	metadata = preprocessor.build_from_path(hparams, input_folders, mel_dir, linear_dir, wav_dir, args.n_jobs, tqdm=tqdm)
 	write_metadata(metadata, out_dir)
 
+
 def write_metadata(metadata, out_dir):
 	with open(os.path.join(out_dir, 'train.txt'), 'w', encoding='utf-8') as f:
 		for m in metadata:
@@ -31,6 +32,7 @@ def write_metadata(metadata, out_dir):
 	print('Max mel frames length: {}'.format(max(int(m[4]) for m in metadata)))
 	print('Max audio timesteps length: {}'.format(max(m[3] for m in metadata)))
 
+
 def norm_data(args):
 
 	merge_books = (args.merge_books=='True')
@@ -41,9 +43,13 @@ def norm_data(args):
 		raise ValueError('dataset value entered {} does not belong to supported datasets: {}'.format(
 			args.dataset, supported_datasets))
 
+	if args.dataset.startswith('liepa'):
+		if not args.voice:
+			raise ValueError('`--voice` parameter not defiend for  datasets {}'.format(args.dataset))
+		return [os.path.join(args.base_dir, voice) for voice in args.voice.split(',')]
+
 	if args.dataset.startswith('LJSpeech'):
 		return [os.path.join(args.base_dir, args.dataset)]
-
 
 	if args.dataset == 'M-AILABS':
 		supported_languages = ['en_US', 'en_UK', 'fr_FR', 'it_IT', 'de_DE', 'es_ES', 'ru_RU',
@@ -89,9 +95,9 @@ def main():
 	parser.add_argument('--base_dir', default='')
 	parser.add_argument('--hparams', default='',
 		help='Hyperparameter overrides as a comma-separated list of name=value pairs')
-	parser.add_argument('--dataset', default='LJSpeech-1.1')
+	parser.add_argument('--dataset', default='cantonese')
 	parser.add_argument('--language', default='en_US')
-	parser.add_argument('--voice', default='female')
+	parser.add_argument('--voice', default='male')
 	parser.add_argument('--reader', default='mary_ann')
 	parser.add_argument('--merge_books', default='False')
 	parser.add_argument('--book', default='northandsouth')
